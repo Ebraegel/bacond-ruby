@@ -11,8 +11,8 @@ note: you should be root to use ports < 1024
 
 class BaconServer
 
-  @@default_meatlist = ["alcatra", "amet", "andouille", "bacon", "ball", "beef", "belly", "biltong", "boudin", "bratwurst", "bresaola", \
-  "brisket", "capicola", "chicken", "chop", "chuck", "corned", "cow", "cupim", "dolor", "doner", "drumstick", \
+  @@default_meatlist = ["alcatra", "amet", "andouille", "bacon", "ball", "beef", "belly", "biltong", "boudin", "bratwurst", \
+  "bresaola", "brisket", "capicola", "chicken", "chop", "chuck", "corned", "cow", "cupim", "dolor", "doner", "drumstick", \
   "fatback", "filet", "flank", "frankfurter", "ground", "ham", "hamburger", "hock", "jerky", "jowl", "kevin", \
   "kielbasa", "kishka", "landjaeger", "leberkas", "loin", "meatball", "meatloaf", "mignon", "pancetta", \
   "pastrami", "picanha", "pig", "porchetta", "pork", "prosciutto", "ribeye", "ribs", "round", "rump", \

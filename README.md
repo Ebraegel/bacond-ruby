@@ -4,7 +4,7 @@ Inspiration and list of meats taken from http://baconipsum.com/
 
 ## Usage:
  
-./bacond.rb  [-nh]  [-p port]
+./bacond.rb  [-cdhn]  [-p port]
 
 note: you should be root to use ports < 1024
 
