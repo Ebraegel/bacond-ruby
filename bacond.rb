@@ -21,10 +21,12 @@ class BaconServer
 
   def initialize(params = {})
     # default options will be overridden by anything in the params hash when merged
-    options = {:meatlist => @@default_meatlist, :newline => false, :port => 47808}.merge(params)
+    options = {:meatlist => @@default_meatlist, :newline => false, :port => 47808, :debug => false, :continuous => false}.merge(params)
     @meatlist = options[:meatlist]
     @newline = options[:newline]
     @port = options[:port]
+    @debug = options[:debug]
+    @continuous = options[:continuous]
     begin
     @server = TCPServer.new(@port)
     rescue TypeError => e
@@ -34,7 +36,15 @@ class BaconServer
     end
   end # initialize
 
-  def run_server
+  def run
+    if @continuous == false
+      then self.run_server_single
+    else 
+      self.run_server_continuous
+    end
+  end
+
+  def run_server_single
     loop do
       socket = @server.accept
       socket << @meatlist.sample
@@ -42,6 +52,23 @@ class BaconServer
       socket.close
     end # loop
   end # run_server
+
+  def run_server_continuous
+    loop do
+      if @debug == true
+        puts "THREADS::"
+        Thread.list.each do |t|
+          puts "#{t} :: #{t.status}"
+        end 
+      end
+      Thread.start(@server.accept) do |socket|
+        loop do
+          socket << @meatlist.sample
+          socket << "\n" if @newline == true
+        end
+      end
+    end
+  end
 
 end # BaconServer
 
@@ -51,6 +78,8 @@ optparse = OptionParser.new do |opts|
   opts.banner = usage
   opts.on("-p", "--port port", Integer, "BaconServer's listen port.  Default is 47808 (0xBAC0).") { |port| options[:port] = port }
   opts.on("-n", "--newline", "Include a newline after each meat. Default is no newline.") { options[:newline] = true }
+  opts.on("-d", "--debug", "Produce extra output for debugging") { options[:debug] = true }
+  opts.on("-c", "--continuous", "Produce a continuous stream of meat.  Default is to close the connections after only one meat.") { options[:continuous] = true }
   opts.on('-h', '--help', "-?", 'Display this help text') do
     puts opts
     exit
@@ -59,4 +88,4 @@ optparse = OptionParser.new do |opts|
 end
 
 server = BaconServer.new(options)
-server.run_server
+server.run
