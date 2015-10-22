@@ -5,6 +5,7 @@ Inspiration and list of meats taken from http://baconipsum.com/
 ## Usage:
  
 ./bacond.rb  [-nh]  [-p port]
+
 note: you should be root to use ports < 1024
 
     -p, --port port                  BaconServer's listen port.  Default is 47808 (0xBAC0).
